@@ -16,7 +16,6 @@ exports.createProductValidations = [
     .withMessage('Description must be string')
     .notEmpty()
     .withMessage('Must provide a valid description'),
-  ,
   body('quantity')
     .isNumeric()
     .withMessage('Quantity must be a number')
@@ -31,7 +30,21 @@ exports.createProductValidations = [
 
 // END: Products validations
 
-exports.validationResult = catchAsync(async (req, res, next) => {
+// Cart validations
+exports.productInCartValidation = [
+  body('productId')
+    .isNumeric()
+    .withMessage('Product id must be a number')
+    .custom((value) => value > 0)
+    .withMessage('Must provide a valid id'),
+  body('quantity')
+    .isNumeric()
+    .withMessage('Quantity must be a number')
+    .custom((value) => value > 0)
+    .withMessage('Quantity must be greater than 0')
+];
+
+exports.validateResult = catchAsync(async (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {

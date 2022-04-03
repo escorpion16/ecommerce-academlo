@@ -19,4 +19,4 @@ const Cart = sequelize.define('cart', {
   }
 });
 
-modelu.exports = { Cart };
+module.exports = { Cart };
